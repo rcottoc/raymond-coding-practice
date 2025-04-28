@@ -2,11 +2,11 @@
 #include <cstdlib>
 using namespace std;
 
-char board[3][3] = { { '1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };              //board declaration
-int player;                                                                            //player identifier... intended values will be player = 1 or player = 2
+char board[3][3] = { { '1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };              // board declaration
+int player;                                                                            // player identifier... intended values will be player = 1 or player = 2
 char marker;                                                                          // X or O marks the spot
 
-void drawBoard();                                                                   //function prototypes 
+void drawBoard();                                                                   // function prototypes 
 bool placeMarker(int);
 int checkWin();
 void swapPlayer();
@@ -16,8 +16,6 @@ void pvp();
 void pvc();
 void rules();
 void boardWipe();
-
-
 
 int main() {
     while (true) {
@@ -42,13 +40,12 @@ int main() {
         }
         system("sleep 3.5");                                        // Note to self: Make small branch to allow Windows equivalent code... or, once and for all, figure out how to do these system commands from within C++
         system("clear");
-        boardWipe();                                              //reset board function call
+        boardWipe();                                              // reset board function call
     }
 
 }
 
-
-void drawBoard() {                                               // nested for loops will draw rows and columns, displaying the "marker" at the board position
+void drawBoard() {                                              // nested for loops will draw rows and columns, displaying the "marker" at the board position
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             cout << board[i][j];
@@ -78,7 +75,7 @@ bool placeMarker(int slot) {          // logic to assign marker to desired posit
     }
 
     if (board[row][col] != 'X' && board[row][col] != 'O') {     // Note to self: for the love of God, research what is the equivalent to Python's string.lower() in C++
-        board[row][col] = marker;                               // if marker not already set by player, assign marker
+        board[row][col] = marker;                              // if marker not already set by player, assign marker
         return true;
     }
     else {
@@ -92,11 +89,11 @@ int checkWin() {                                                                
             return player;
         }
 
-        if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {        // check rows
+        if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {     // check rows
             return player;
         }
     }
-    // check diagonals
+                                                                         // check diagonals
     if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
         return player;
     }
@@ -110,6 +107,7 @@ int checkWin() {                                                                
 void swapPlayer() {
     if (marker == 'X') {             // if current marker is X then change to O
         marker = 'O';
+    }
     else {
         marker = 'X';
     }
@@ -118,7 +116,7 @@ void swapPlayer() {
         player = 2;
     }
     else {
-        player = 1;             // else
+        player = 1;             
     }
 }
 
@@ -211,7 +209,7 @@ void pvc() {
     drawBoard();
     int player_wins = 0;
 
-    for (int i = 0; i < 9; i++) {             //repeat of pvp for player 1
+    for (int i = 0; i < 9; i++) {             // repeat of pvp for player 1
 
         if (player % 2) {                    // check if player 1 turn
             cout << "It's your turn. Enter your slot: ";
@@ -276,7 +274,7 @@ void rules() {             // This
 
 }
 
-void boardWipe() { //reset board to 1..9 for positional input from user after round ends
+void boardWipe() { // reset board to 1..9 for positional input from user after round ends
     for (int i = 1; i < 10; i++) {
         int row = i / 3;
         int col = i % 3;
