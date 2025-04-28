@@ -143,7 +143,7 @@ int menu() {
     return choice;
 }
 
-void pvp() {
+void pvp() {                            // player versus player
 
     cout << "Player 1, choose your marker:\n\n\tX\t|\tO\n";
     cin >> marker;
@@ -196,7 +196,7 @@ void pvp() {
     }
 }
 
-void pvc() {
+void pvc() {                                      // player versus computer
     cout << "Player 1, choose your marker:\n\n\tX\t|\tO\n";
     cin >> marker;
      if ( marker == 'x' ) {            // fix capitalization; if the user chooses any other marker than X OR O lower or upper, then it's all doomed. TO be fixed... Soon™
@@ -230,7 +230,7 @@ void pvc() {
             }
         }
         else {
-            cout << "CPU choice was: ";
+            
             srand(time(NULL));                  // seed random based on time of execution of this line
             int slot = rand() % 9 + 1;         // mod 9 random value so it's between 0 and 8, increment by 1 for desired slot values. 
             if (slot < 1 || slot > 9) {       // without announcing to player, try a different random value for CPU, this one was not valid.
@@ -242,6 +242,7 @@ void pvc() {
                 i--;
                 continue;
             }
+            cout << "CPU choice was: ";
             cout << slot << endl;
             system("sleep 2.5");
         }
