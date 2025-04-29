@@ -171,3 +171,126 @@ class player { // I plan for player to be part of vector<player> table, and for 
             cout << endl;
         }
 };
+class table {
+    public:
+        vector<player> players;
+
+        table() {
+        }
+        ~table() {
+        }
+        void drawTable() {
+            cout << "###########################################################################" << endl
+                 << "|                   ___________________________________                   |" << endl
+                 << "|                  |                                   |                  |" << endl
+                 << "|                  |                                   |                  |" << endl
+                 << "|                  |           POCKET CASINO           |                  |" << endl
+                 << "|                  |                                   |                  |" << endl
+                 << "|                  |                                   |                  |" << endl
+                 << "|                  |___________________________________|                  |" << endl
+                 << "|                                                                         |" << endl
+                 << "|                                                                         |" << endl
+                 << "###########################################################################" << endl;
+        }
+        bool playerJoin() {         // players get added to player vector
+            if (this->players.size() < 4) {            // max players per table = 4
+                cout << "New Player Name: ";
+                string name = "";
+                ws(cin);
+                getline(cin, name);
+                player newPlayer(name);
+                players.push_back(newPlayer);
+                return true;
+            }
+            return false;
+        }
+};
+class dealer {            // dealer objects will handle all interactions between the players and the deck
+    private:
+        int pot;
+        int wallet;
+        vector<card> dealerhand;
+    public:
+        dealer() {
+            this->wallet = INT_MAX;          // Infinite money hax for dealer, tax deductible expense
+            this->pot = 0;                  // Temporary storage for amounts being bet
+        }
+/*
+        void peekDeck( vector<card> &deckref ) {  // debugging feature, will comment/delete when finished solution
+            cout << deckref.at(0).getCardValue() << " " << deckref.at(0).getCardSuit() << endl;
+        }
+*/
+        bool dealCard (deck &deckref, vector<card> &handref, int randomized) {             // pull random card from deck into Player hand, ERASE it from the deck so no dupes
+            if (deckref.getDeckSize() > 5) {                                              // This line is intended to check if deck is running out of cards
+                handref.push_back(deckref.giveCard(randomized % deckref.getDeckSize())); // randomized large number modulo deck size will only give a random valid index to give (.giveCard() handles the erasure as well as the transfer)
+                                                                                        // randomized is srand(time(NULL), giveCard() uses <vector>.erase() to delete the random card we're giving to the hand from the deck
+                return true;
+            }
+            else if (deckref.getDeckSize() <= 5) {
+                cout << "Reshuffling deck...\n\n\n";
+                deckref.deckReshuffle();
+                system("sleep 4");                                                 // ASAP make branch to determine OS and do OS specific sleep/timeout /t ! OR learn to do this within C++
+                handref.push_back(deckref.giveCard(randomized % deckref.getDeckSize()));
+                return true;
+            }
+            return false;
+        }
+        bool dealDealer(deck &deckref, int randomized) { 
+            if (deckref.getDeckSize() > 1) {                                                             // No dealing from empty deck in this casino
+                this->dealerhand.push_back(deckref.giveCard(randomized % deckref.getDeckSize()));       // get card, erase card
+                return true;
+            }
+            else if (deckref.getDeckSize() <= 0) {                                                    // I don't know how I could possibly get deck size < 0 but just in case
+                cout << "Reshuffling deck...\n\n\n";
+                deckref.deckReshuffle();
+                system("sleep 4");                                                 // ASAP make branch to determine OS and do OS specific sleep/timeout /t ! OR learn to do this within C++
+                this->dealerhand.push_back(deckref.giveCard(randomized % deckref.getDeckSize()));
+                return true;
+            }
+            return false;
+        }
+        bool takeBet (player &gambler, int amount) {                   // &gambler is the player placing bet, amount is the bet amount
+                if (gambler.wallet >= amount) {                       // player objects have wallet for total amount
+                    gambler.bet = amount;                            // they also have bet amount to hold how much they currently placed in pot, this will be helpful in aiding the dealer hand out individual winnings
+                    gambler.wallet -= amount;                       // wallet must lose bet amount
+                    this->pot += amount;                           // pot increased by amount placed
+                    return true;                                  
+                }
+                else {
+                    cerr << gambler.getPlayerName() << " cannot make that bet. " << endl
+                         << gambler.getPlayerName() << " Wallet: " << gambler.getPlayerWallet() << endl;
+                    return false;
+                }
+        }
+        void renderDealer() {                                         // Chaddeus Maximus III
+            cout << "                         __________"     << endl
+                 << "                       /            \\"  << endl
+                 << "                      |    $    $    |"  << endl
+                 << "                       \\     ___     /" << endl
+                 << "                        \\_____#_____/"  << endl
+                 << "                      ______|   |______" << endl
+                 << "                    /                   \\" << endl
+                 << "                   /   /|            |\\  \\" << endl;
+        }
+        void showHand() {
+            for (card each : this->dealerhand) {
+                each.asciiCard();
+                cout << "   ";
+            }
+            cout << endl;                               // this line might need removed, I think it's causing unintended newlines
+        }
+        void countHand() {                             // this will let the dealer know whether he should hit or stand
+            int counter = 0;
+            for (card ace : this->dealerhand) {
+                counter += ace.getCardValue();
+            }
+            return counter;
+        }
+};
+
+/************************ CLASSES ABOVE ************************/
+void banner() {
+    cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
+         << "|                             POCKET   CASINO                             |" << endl
+         << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+}
