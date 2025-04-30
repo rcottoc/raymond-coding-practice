@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class card() {
+class card {
     private:
         int value;
         string suit;
@@ -263,14 +263,14 @@ class dealer {            // dealer objects will handle all interactions between
                 }
         }
         void renderDealer() {                                         // Chaddeus Maximus III
-            cout << "                         __________"     << endl
-                 << "                       /            \\"  << endl
-                 << "                      |    $    $    |"  << endl
-                 << "                       \\     ___     /" << endl
-                 << "                        \\_____#_____/"  << endl
-                 << "                      ______|   |______" << endl
-                 << "                    /                   \\" << endl
-                 << "                   /   /|            |\\  \\" << endl;
+            cout << "                                 __________"     << endl
+                 << "                               /            \\"  << endl
+                 << "                              |    $    $    |"  << endl
+                 << "                               \\     ___     /" << endl
+                 << "                                \\_____#_____/"  << endl
+                 << "                              ______|   |______" << endl
+                 << "                            /                   \\" << endl
+                 << "                           /   /|            |\\  \\" << endl;
         }
         void showHand() {
             for (card each : this->dealerhand) {
