@@ -288,9 +288,29 @@ class dealer {            // dealer objects will handle all interactions between
         }
 };
 
-/************************ CLASSES ABOVE ************************/
+/************************************************/
 void banner() {
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
          << "|                             POCKET   CASINO                             |" << endl
          << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 }
+
+void endScene() {
+    string userChoice = "";
+    cout << "Press Return to continue." << endl;
+    getline(cin, userChoice);
+    system("clear");
+}
+
+void startScene() {
+    system("clear");
+    banner();
+}
+
+void resetScene(dealer &deal, table &blackjack) {
+    startScene();
+    deal.renderDealer();
+    blackjack.drawTable();
+}
+
+
