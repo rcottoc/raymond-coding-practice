@@ -12,7 +12,7 @@ class card {
         int value;
         string suit;
     public:
-        card() {                               // default constructor
+        card(void) {                               // default constructor
             this->value = 0;
             this->suit = "Joker";
         }
@@ -20,11 +20,11 @@ class card {
             this->value = value;
             this->suit = suit;
         }
-        ~card() {}                          // destructor is just in case I need it later
-        void textCard() {                  // Text verson of card display, used for initial debugging
+        ~card(void) {}                          // destructor is just in case I need it later
+        void textCard(void) {                  // Text verson of card display, used for initial debugging
             cout << this->value << " of " << this->suit << endl;
         }
-        void asciiCard() {                // The real enchirito. Likely improvable, but it works! It displays the ascii art card #rendering
+        void asciiCard(void) {                // The real enchirito. Likely improvable, but it works! It displays the ascii art card #rendering
             cout << "--------------" << endl;
             if (this->value == 1) {
                 cout << "|          A |" << endl;
@@ -80,10 +80,10 @@ class card {
             }
                 cout << "--------------" << endl;
         }
-        int getCardValue() {                        // getter for value
+        int getCardValue(void) {                        // getter for value
             return this->value;
         }
-        string getCardSuit() {                      // getter for suit
+        string getCardSuit(void) {                      // getter for suit
             return this->suit
         }
 };
@@ -93,25 +93,25 @@ class deck {                                      // deck class is an object pri
         const string suits[4] = {"Hearts", "Spades", "Diamonds", "Clubs"};     // All valid suits
         vector<card> cardlist;                                                // vector of card objects (sounds a lot more mysterious than deck of cards)
     public:
-        deck() {                                  // default constructor "shuffles" all values and suits into deck
-            for (int s = 0; s < 4; s++) {         // s is short for suit in this context; 4 suits from 0 through 3
-                for (int i = 1; i <= 13; i++) {  // i is short for value in this context; 13 values from A through K
+        deck(void) {                                  // default constructor "shuffles" all values and suits into deck
+            for (int s = 0; s < 4; s++) {            // s is short for suit in this context; 4 suits from 0 through 3
+                for (int i = 1; i <= 13; i++) {     // i is short for value in this context; 13 values from A through K
                     cardlist.push_back(card(i, suits[s]));   // card constructor invoked, i is passed to value, suits[s] is passed to suit; push_back() adds card to cardlist
                 }
             }
         }
-        ~deck() { // destructor in case of emergency
+        ~deck(void) { // destructor in case of emergency
         }
-        void showDeck() {                     // Display all deck contents
+        void showDeck(void) {                     // Display all deck contents
             for (card thisone : cardlist) {
                 thisone.textCard();          // in text
                 thisone.asciiCard();        // in ascii
             }
         }
-        unsigned getDeckSize() {          // Important method for dealer object to determine if reshuffle necessary
+        unsigned getDeckSize(void) {          // Important method for dealer object to determine if reshuffle necessary
             return this->cardlist.size();
         }
-        void deckReshuffle() {           // seems like this mmight be a waste of memory or something, but I could not come up with a better solution for now
+        void deckReshuffle(void) {           // seems like this mmight be a waste of memory or something, but I could not come up with a better solution for now
             cardlist.resize(0);         // reset cardlist vector size to 0;
             if (!cardlist.empty()) {   // ideally this never triggers, but just in case make sure it's empty
                 cardlist.pop_back();  // fix it if needed
@@ -134,8 +134,8 @@ class player { // I plan for player to be part of vector<player> table, and for 
     public:
         int wallet;
         int bet;
-        vector<card> playerhand;         // Note: investigate if player hand should be private attrib for safety, but for now this will allow the dealer to interact with the player's hand directly
-        player() {                      // Default player constructor
+        vector<card> playerhand;             // Note: investigate if player hand should be private attrib for safety, but for now this will allow the dealer to interact with the player's hand directly
+        player(void) {                      // Default player constructor
             this->wallet = 500;
             this->name = "Gina";
         }
@@ -147,12 +147,12 @@ class player { // I plan for player to be part of vector<player> table, and for 
             this->wallet = wallet;
             this->name = name;
         }
-        ~player() {                // emergency destructor
+        ~player(void) {                // emergency destructor
         }
         void setPlayerName(string name) {
             this->name = name;
         }
-        string getPlayerName() { 
+        string getPlayerName(void) { 
             return this->name;
         }
 /*
@@ -160,10 +160,10 @@ class player { // I plan for player to be part of vector<player> table, and for 
             this->wallet = wallet;
         }
 */
-        int getPlayerWallet() {
+        int getPlayerWallet(void) {
             return this->wallet;
         }
-        void showHand() {                        // this will allow the player to view their hand #rendering
+        void showHand(void) {                        // this will allow the player to view their hand #rendering
             for (card each : this->playerhand) {
                 each.asciiCard();
                 cout << "  ";
@@ -175,11 +175,11 @@ class table {
     public:
         vector<player> players;
 
-        table() {
+        table(void) {
         }
-        ~table() {
+        ~table(void) {
         }
-        void drawTable() {
+        void drawTable(void) {
             cout << "###########################################################################" << endl
                  << "|                   ___________________________________                   |" << endl
                  << "|                  |                                   |                  |" << endl
@@ -192,7 +192,7 @@ class table {
                  << "|                                                                         |" << endl
                  << "###########################################################################" << endl;
         }
-        bool playerJoin() {         // players get added to player vector
+        bool playerJoin(void) {         // players get added to player vector
             if (this->players.size() < 4) {            // max players per table = 4
                 cout << "New Player Name: ";
                 string name = "";
@@ -211,7 +211,7 @@ class dealer {            // dealer objects will handle all interactions between
         int wallet;
         vector<card> dealerhand;
     public:
-        dealer() {
+        dealer(void) {
             this->wallet = INT_MAX;          // Infinite money hax for dealer, tax deductible expense
             this->pot = 0;                  // Temporary storage for amounts being bet
         }
@@ -262,7 +262,7 @@ class dealer {            // dealer objects will handle all interactions between
                     return false;
                 }
         }
-        void renderDealer() {                                         // Chaddeus Maximus III
+        void renderDealer(void) {                                         // Chaddeus Maximus III
             cout << "                                 __________"     << endl
                  << "                               /            \\"  << endl
                  << "                              |    $    $    |"  << endl
@@ -272,14 +272,14 @@ class dealer {            // dealer objects will handle all interactions between
                  << "                            /                   \\" << endl
                  << "                           /   /|            |\\  \\" << endl;
         }
-        void showHand() {
+        void showHand(void) {
             for (card each : this->dealerhand) {
                 each.asciiCard();
                 cout << "   ";
             }
             cout << endl;                               // this line might need removed, I think it's causing unintended newlines
         }
-        void countHand() {                             // this will let the dealer know whether he should hit or stand
+        void countHand(void) {                             // this will let the dealer know whether he should hit or stand
             int counter = 0;
             for (card ace : this->dealerhand) {
                 counter += ace.getCardValue();
@@ -289,20 +289,20 @@ class dealer {            // dealer objects will handle all interactions between
 };
 
 /************************************************/
-void banner() {
+void banner(void) {
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
          << "|                             POCKET   CASINO                             |" << endl
          << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 }
 
-void endScene() {
+void endScene(void) {
     string userChoice = "";
     cout << "Press Return to continue." << endl;
     getline(cin, userChoice);
     system("clear");
 }
 
-void startScene() {
+void startScene(void) {
     system("clear");
     banner();
 }
@@ -313,4 +313,116 @@ void resetScene(dealer &deal, table &blackjack) {
     blackjack.drawTable();
 }
 
+int main(void) {
+    // player samplePlayer;   // debugging player.
+    // vector<player> table; // debugging table.
+    deck standard;
+    dealer slickhand;
+    table blackjack;
 
+    string userChoice = "";
+    while(true) {
+        srand(time(NULL));
+        int randomizer = random();
+        startScene();
+        cout << "Main Menu: " << endl
+             << "\t1) Play Blackjack" << endl
+             << "\t2) Watch ad for cash" << endl
+             << "\t0) Leave Casino" << endl
+             << ">>> ";
+        ws(cin);
+        getline(cin, userChoice);
+/*         if (userChoice == "y") {             // sample outputs
+                slickhand.dealCard(standard, samplePlayer.playerhand, randomizer);
+
+                cout << samplePlayer.playerhand.at(0).getCardValue() << " " << samplePlayer.playerhand.at(0).getCardSuit() << endl;
+
+                samplePlayer.playerhand.at(0).asciiCard();
+
+                cout << "Cards left in deck: " << standard.getDeckSize() << endl;
+
+                samplePlayer.playerhand.pop_back();
+
+                endScene();
+            }
+*/
+        if (userChoice == "1") {
+            while(true) {
+                startScene();
+                cout << "1) Manage Players" << endl        // To do: Fix this branch to allow adding or removing players from table. Branch exists, but no removal there just placeholder text
+                     << "2) Play Round" << endl
+                     << "0) Leave Table" << endl;
+                slickhand.renderDealer();
+                blackjack.drawTable();
+                cout << "What would you like to do?" << endl
+                     << ">>> ";
+                ws(cin);
+                getline(cin, userChoice);
+                if (userChoice == "1") {
+                    resetScene(slickhand, blackjack);     // NTS: These arguments seem arbitrary, consider rewrite.
+                    cout << "What would you like to do?" << endl
+                         << "\t1) Add New Player" << endl
+                         << "\t2) Remove Player" << endl
+                         << "\t0) Back" << endl
+                         << "\t>>> ";
+                    ws(cin);
+                    getline(cin, userChoice);
+                    if (userChoice == "1") {
+                        if (blackjack.playerJoin()) {
+                            cout << "Welcome Players! " << endl;
+                            int count = 1;
+                            for (player gambler : blackjack.players) {
+                                cout << "\tPlayer " << count++ << ": " << gambler.getPlayerName() << endl;
+                            }
+                        }
+                        else {
+                            cerr << "Table is full. Player cannot join until another player leaves. " << endl;
+                        }
+                    }
+                    else if (userChoice == "2") {
+                        cout << "Placeholder Text for REMOVAL: waste managed" << endl;
+                    }
+                    else if (userChoice == "0") {
+                        continue;
+                    }
+                    else{
+                        cerr << "Invalid selection [ " << userChoice << " ]" << endl;
+                    }
+
+                }
+                else if (userChoice == "2") {
+                    if (standard.getDeckSize() <= 17) {
+                        standard.deckReshuffle();
+                    }
+                    if (blackjack.players.size() >= 1) {
+                        for (player gambler : blackjack.players) {
+                            bool validAmount = false;
+                            while (!validAmount) {
+                                cout << "How much would " << gambler.getPlayerName() << " like to bet: ";
+                                int money = 0;
+                                cin >> money;
+                                if (slickhand.takeBet(gambler, money)) {
+                                    cout << "Bet received!" << endl;
+                                    validAmount = true;
+                                }
+                            }
+                            if (slickhand.dealCard(standard, gambler.playerhand, randomizer)) {
+                                cout << gambler.getPlayerName() << " was dealt a card!\n";
+                            }
+                            else {
+                                cerr << "Something went wrong." << endl;
+                            }
+                        }
+                        if (slickhand.dealDealer(standard, randomizer)) {
+                            cout << "Dealer was dealt a card!" << endl;
+                        }
+                        else {
+                            cerr << "Something went wrong." << endl;
+                        }
+                        endScene();
+                    }
+                }
+            }
+        }
+    }
+}
