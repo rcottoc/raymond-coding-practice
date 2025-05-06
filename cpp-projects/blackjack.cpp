@@ -420,9 +420,67 @@ int main(void) {
                             cerr << "Something went wrong." << endl;
                         }
                         endScene();
+                        for (player gambler : blackjack.players) {
+                            bool hitting = true;
+                            while (hitting) {
+                                resetScene(slickhand, blackjack);
+                                cout << "Dealer Hand: " << endl;
+                                slickhand.showHand();
+
+                                cout << "Dealer will draw until 16, and stand at 17.\n\nWhat would you like to do?\n\t1) Hit\n\t2) Stand" << endl;
+                                cout << ">>> ";
+                                ws(cin);
+                                getline(cin, userChoice);
+
+                                if (userChoice == "1") {
+                                    if (slickhand.dealCard(standard, gambler.playerhand, randomizer)) { // STILL NEEDS A WAY TO CHECK FOR PLAYER BUST
+                                        cout << gambler.getPlayerName() << " was dealt a card!" << endl;
+                                        system("sleep 2");
+                                    }
+                                    else {
+                                        cerr << "Something went wrong." << endl;
+                                        system("sleep 2");
+                                    }
+                                }
+                                else if (userChoice == "2") {
+                                    cout << "You chose stand." << endl;
+                                    hitting = false;
+                                    system("sleep 2");
+                                }
+                                else {
+                                    cerr << "Invalid selection [ " << userChoice << " ]" << endl;
+                                }
+                                endScene();
+                            }
+                        }
+                        while (slickhand.countHand() <= 16) { 
+                            slickhand.dealDealer(standard, randomizer);
+                        }
+
+                        /* MAKE LOGIC FOR PLAYERS BEAT DEALER */
+                    }
+                    else {
+                        cerr << "Table is empty! Player(s) must join table to play a round of blackjack." << endl;
                     }
                 }
+                endScene();
             }
         }
+        else if (userChoice == "2") {
+            cout << "Choice 2" << endl;  // This needs to be replaced with the instructions for choice 2
+            endScene();
+        }
+        else if (userChoice == "0") {
+            cout << "See you next time!" << endl;
+            break;
+        }
+        else {
+            cerr << "Invalid selection [ " << userChoice << " ]. Expected 1, 2, or 0. Please try again!.\n Press return to continue." << endl;
+            ws(cin);
+            getline(cin,userChoice);
+            system("clear");
+        }
+        // blackjack.showDeck();
     }
+    return 21;
 }
