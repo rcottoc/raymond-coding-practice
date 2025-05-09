@@ -1,6 +1,6 @@
 Financial Planner Goals:
 
-Create a script that tracks income and expenses, allows the user to categorize each transaction, and then generates useful insights (e.g., monthly summaries, visual reports, etc).
+  Create a script that tracks income and expenses, allows the user to categorize each transaction, and then generates useful insights (e.g., monthly summaries, visual reports, etc).
 
 Features:
 
@@ -24,15 +24,15 @@ Data Storage:
 
 Monthly Summary Report:
 
-Generate a summary report for the current month:
+  Generate a summary report for the current month:
 
-  Total Income
+    Total Income
 
-  Total Expenses
+    Total Expenses
 
-  Savings (Income - Expenses)
+    Savings (Income - Expenses)
 
-  Breakdown of expenses by category (e.g., Food: $200, Rent: $800)
+    Breakdown of expenses by category (e.g., Food: $200, Rent: $800)
 
 Visual Reports:
 
