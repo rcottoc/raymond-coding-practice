@@ -85,3 +85,9 @@ Recurring Transactions:
 Data Encryption:
 
   Implement basic encryption (using cryptography library) to secure the JSON data file.
+
+Implementation:
+  main.py - Main script that runs the CLI and handles the flow of the application.
+  utils.py - Helper functions for tasks like reading/writing JSON, handling transactions, etc.
+  visualizations.py - Handles data visualization (bar chart, pie chart, etc.).
+  categories.py - For managing categories and budgets.
